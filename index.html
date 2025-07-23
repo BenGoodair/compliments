@@ -222,7 +222,11 @@
         top = Math.max(20, Math.min(innerHeight-50, top));
         el.style.left = left+'px'; el.style.top = top+'px'; el.style.transform = `rotate(${ -30+Math.random()*60 }deg)`;
         popWordContainer.appendChild(el);
-        setTimeout(()=>popWordContainer.removeChild(el), 1800);
+        setTimeout(() => {
+          if (el.parentNode) {
+            popWordContainer.removeChild(el);
+          }
+        }, 1800);
       }
 
       function displayRandomCompliment() {
