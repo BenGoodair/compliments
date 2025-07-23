@@ -43,23 +43,43 @@
 
     /* Tab styles */
     .tab-btn {
-      @apply px-4 py-2 font-semibold rounded-t-2xl focus:outline-none;
+      padding: 0.5rem 1rem;
+      font-weight: 600;
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+      background-color: #FED7CC;
+      color: #FF7F50;
+      border: 2px solid #FF7F50;
+      border-bottom: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .tab-btn:hover {
+      background-color: #FFF;
+      transform: translateY(-2px);
     }
     .tab-btn.active {
-      @apply bg-white text-[#FF7F50] border-t-4 border-[#FF7F50];
+      background-color: #FFF;
+      color: #FF7F50;
+      border-top: 4px solid #FF7F50;
+      transform: translateY(-2px);
     }
     .tab-content {
       display: none;
+      width: 100%;
+      flex-grow: 1;
+      align-items: center;
+      justify-content: center;
     }
     .tab-content.active {
-      display: flex !important;
+      display: flex;
     }
   </style>
 </head>
 <body class="bg-gradient-to-r from-orange-100 to-rose-100 min-h-screen flex flex-col items-center">
 
   <!-- NAV TABS -->
-  <div class="mt-8 flex space-x-4">
+  <div class="mt-8 flex space-x-2">
     <button id="tab-compliments-btn" class="tab-btn active">
       <i class="fas fa-comment-dots mr-2"></i>Compliments
     </button>
@@ -69,7 +89,7 @@
   </div>
 
   <!-- COMPLIMENTS TAB CONTENT -->
-  <div id="tab-compliments" class="tab-content active w-full flex-grow flex items-center justify-center">
+  <div id="tab-compliments" class="tab-content active">
     <div class="bg-white shadow-2xl rounded-2xl p-8 text-center max-w-md w-full mx-4 relative overflow-hidden">
       <h1 class="text-3xl font-bold text-[#FF7F50] mb-6">Compliments for my pudding<br>  💕🍮💕</h1>
       <div id="pop-word-container"></div>
@@ -86,7 +106,7 @@
   </div>
 
   <!-- TOP OF THE POPS TAB CONTENT -->
-  <div id="tab-pops" class="tab-content w-full flex-grow flex items-center justify-center">
+  <div id="tab-pops" class="tab-content">
     <div class="bg-white shadow-2xl rounded-2xl p-8 text-center max-w-md w-full mx-4 relative overflow-hidden">
       <h1 class="text-3xl font-bold text-[#FF7F50] mb-6">
         <i class="fas fa-heart text-[#FF7F50] animate-pulse mx-2"></i>
@@ -126,13 +146,16 @@
     const tabPops        = document.getElementById('tab-pops');
 
     function showTab(tab) {
-      [complimentsBtn, popsBtn].forEach(btn => btn.classList.remove('active'));
-      [tabCompliments, tabPops].forEach(panel => panel.classList.remove('active'));
+      // Remove active class from all buttons and tabs
+      complimentsBtn.classList.remove('active');
+      popsBtn.classList.remove('active');
+      tabCompliments.classList.remove('active');
+      tabPops.classList.remove('active');
 
       if (tab === 'compliments') {
         complimentsBtn.classList.add('active');
         tabCompliments.classList.add('active');
-      } else {
+      } else if (tab === 'pops') {
         popsBtn.classList.add('active');
         tabPops.classList.add('active');
       }
@@ -169,7 +192,7 @@
           compliments = text.split('\n').filter(c=>c.trim()).map(c=>c.trim());
           displayRandomCompliment();
         } catch {
-          complimentText.textContent = 'Ohhhhh, want to compliment you but I can’t right now';
+          complimentText.textContent = 'Ohhhhh, want to compliment you but I can't right now';
           setLoading(false);
         }
       }
