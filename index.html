@@ -139,42 +139,42 @@
   </div>
 
   <script>
-    // Tab-switching logic
-    const complimentsBtn = document.getElementById('tab-compliments-btn');
-    const popsBtn       = document.getElementById('tab-pops-btn');
-    const tabCompliments = document.getElementById('tab-compliments');
-    const tabPops        = document.getElementById('tab-pops');
-
-    function showTab(tab) {
-      // Remove active class from all buttons and tabs
-      complimentsBtn.classList.remove('active');
-      popsBtn.classList.remove('active');
-      tabCompliments.classList.remove('active');
-      tabPops.classList.remove('active');
-
-      if (tab === 'compliments') {
-        complimentsBtn.classList.add('active');
-        tabCompliments.classList.add('active');
-      } else if (tab === 'pops') {
-        popsBtn.classList.add('active');
-        tabPops.classList.add('active');
-      }
-    }
-
-    complimentsBtn.addEventListener('click', () => showTab('compliments'));
-    popsBtn.addEventListener('click', () => showTab('pops'));
-
-    // === existing compliments JS ===
     document.addEventListener('DOMContentLoaded', () => {
-      const complimentText = document.getElementById('compliment-text');
-      const loadingElement = document.getElementById('loading');
-      const getComplimentBtn = document.getElementById('get-compliment');
+      // ——— Tab logic ———
+      const complimentsBtn  = document.getElementById('tab-compliments-btn');
+      const popsBtn         = document.getElementById('tab-pops-btn');
+      const tabCompliments  = document.getElementById('tab-compliments');
+      const tabPops         = document.getElementById('tab-pops');
+
+      function showTab(tab) {
+        complimentsBtn.classList.remove('active');
+        popsBtn.classList.remove('active');
+        tabCompliments.classList.remove('active');
+        tabPops.classList.remove('active');
+
+        if (tab === 'compliments') {
+          complimentsBtn.classList.add('active');
+          tabCompliments.classList.add('active');
+        } else {
+          popsBtn.classList.add('active');
+          tabPops.classList.add('active');
+        }
+      }
+
+      complimentsBtn.addEventListener('click', () => showTab('compliments'));
+      popsBtn.addEventListener('click', () => showTab('pops'));
+
+
+      // ——— Compliment generator logic ———
+      const complimentText      = document.getElementById('compliment-text');
+      const loadingElement      = document.getElementById('loading');
+      const getComplimentBtn    = document.getElementById('get-compliment');
       const complimentContainer = document.getElementById('compliment-container');
-      const popWordContainer = document.getElementById('pop-word-container');
-      const mainBox = complimentContainer.closest('.bg-white');
+      const popWordContainer    = document.getElementById('pop-word-container');
+      const mainBox             = complimentContainer.closest('.bg-white');
 
       const COMPLIMENTS_URL = 'https://raw.githubusercontent.com/BenGoodair/compliments/main/compliments.txt';
-      const popWords = ["MWAH", "KHOM","GRAB", "Squeeeeze", "rubbiees","POUNCE", "cuddles", "chomp", "eat me", "nuzzzleess","mümmeln" , "kisssiieeeeees", "smooochieeess", "my puddddinggg", "mwwwwah", "mwah mwah mwah"];
+      const popWords = ["MWAH","KHOM","GRAB","Squeeeeze","rubbiees","POUNCE","cuddles","chomp","eat me","nuzzzleess","mümmeln","kisssiieeeeees","smooochieeess","my puddddinggg","mwwwwah","mwah mwah mwah"];
 
       let compliments = [], currentIndex = -1;
 
@@ -186,57 +186,59 @@
       async function fetchCompliments() {
         setLoading(true);
         try {
-          const res = await fetch(COMPLIMENTS_URL);
-          if (!res.ok) throw new Error();
+          const res  = await fetch(COMPLIMENTS_URL);
           const text = await res.text();
           compliments = text.split('\n').filter(c=>c.trim()).map(c=>c.trim());
           displayRandomCompliment();
         } catch {
-          complimentText.textContent = 'Ohhhhh, want to compliment you but I can't right now';
+          complimentText.textContent = 'Ohhhhh, want to compliment you but I can’t right now';
           setLoading(false);
         }
       }
 
       function getRandomCompliment() {
         let i;
-        do { i = Math.floor(Math.random()*compliments.length); }
-        while (i === currentIndex && compliments.length>1);
+        do {
+          i = Math.floor(Math.random()*compliments.length);
+        } while (i === currentIndex && compliments.length > 1);
         currentIndex = i;
         return compliments[i];
       }
 
       function createPopWord() {
         const word = popWords[Math.floor(Math.random()*popWords.length)];
-        const el = document.createElement('div');
+        const el   = document.createElement('div');
         el.textContent = word;
-        el.className = 'pop-word';
-        const r = mainBox.getBoundingClientRect();
-        const placement = Math.floor(Math.random()*4);
+        el.className   = 'pop-word';
+        const r        = mainBox.getBoundingClientRect();
+        const placement= Math.floor(Math.random()*4);
         const m=20, d=150;
         let left, top;
-        if (placement===0) { left=r.left-m-Math.random()*d; top=r.top+Math.random()*r.height; }
-        else if (placement===1) { left=r.right+m+Math.random()*d; top=r.top+Math.random()*r.height; }
-        else if (placement===2) { left=r.left+Math.random()*r.width; top=r.top-m-Math.random()*d; }
-        else { left=r.left+Math.random()*r.width; top=r.bottom+m+Math.random()*d; }
-        left = Math.max(20, Math.min(innerWidth-100,left));
-        top = Math.max(20, Math.min(innerHeight-50, top));
-        el.style.left = left+'px'; el.style.top = top+'px'; el.style.transform = `rotate(${ -30+Math.random()*60 }deg)`;
+        if (placement===0) { left=r.left-m-Math.random()*d;         top=r.top+Math.random()*r.height; }
+        if (placement===1) { left=r.right+m+Math.random()*d;        top=r.top+Math.random()*r.height; }
+        if (placement===2) { left=r.left+Math.random()*r.width;     top=r.top-m-Math.random()*d; }
+        if (placement===3) { left=r.left+Math.random()*r.width;     top=r.bottom+m+Math.random()*d; }
+        left = Math.max(20, Math.min(window.innerWidth-100, left));
+        top  = Math.max(20, Math.min(window.innerHeight-50, top));
+        el.style.left       = `${left}px`;
+        el.style.top        = `${top}px`;
+        el.style.transform  = `rotate(${ -30 + Math.random()*60 }deg)`;
         popWordContainer.appendChild(el);
-        setTimeout(() => {
-          if (el.parentNode) {
-            popWordContainer.removeChild(el);
-          }
-        }, 1800);
+        setTimeout(() => popWordContainer.removeChild(el), 1800);
       }
 
       function displayRandomCompliment() {
-        if (!compliments.length) { complimentText.textContent = 'No compliments!'; setLoading(false); return; }
+        if (!compliments.length) {
+          complimentText.textContent = 'No compliments!';
+          setLoading(false);
+          return;
+        }
         setLoading(true);
-        setTimeout(()=>{
+        setTimeout(() => {
           complimentText.textContent = getRandomCompliment();
           setLoading(false);
           complimentContainer.classList.add('opacity-transition');
-          setTimeout(()=>complimentContainer.classList.remove('opacity-transition'), 300);
+          setTimeout(() => complimentContainer.classList.remove('opacity-transition'), 300);
           const count = 3 + Math.floor(Math.random()*4);
           for (let i=0; i<count; i++) setTimeout(createPopWord, i*200);
         }, 400);
@@ -248,7 +250,11 @@
       getComplimentBtn.addEventListener('mouseleave', () => {
         getComplimentBtn.querySelector('i').style.animation = '';
       });
-      getComplimentBtn.addEventListener('click', () => { if (compliments.length) displayRandomCompliment(); });
+      getComplimentBtn.addEventListener('click', () => {
+        if (compliments.length) displayRandomCompliment();
+      });
+
+      // kick it all off
       fetchCompliments();
     });
   </script>
