@@ -6,17 +6,40 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    /* Custom animations and styles (unchanged) */
-    @keyframes heartbeat { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+    /* Custom animations and styles */
+    @keyframes heartbeat { 
+      0% { transform: scale(1); } 
+      50% { transform: scale(1.1); } 
+      100% { transform: scale(1); } 
+    }
     @keyframes fadeInOut {
       0% { opacity: 0; transform: scale(0.8); }
       15% { opacity: 1; transform: scale(1.1); }
       85% { opacity: 1; transform: scale(1.1); }
       100% { opacity: 0; transform: scale(1); }
     }
-    .pop-word { /* ... your existing pop-word CSS ... */ }
-    .opacity-transition { /* ... */ }
-    #pop-word-container { /* ... */ }
+    .pop-word {
+      position: absolute;
+      font-weight: bold;
+      color: #FF7F50;
+      font-size: 1.5rem;
+      animation: fadeInOut 1.5s forwards;
+      text-shadow: 1px 1px 3px rgba(255, 127, 80, 0.3);
+      z-index: 10;
+    }
+    .opacity-transition {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    #pop-word-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 20;
+    }
 
     /* Tab styles */
     .tab-btn {
@@ -25,18 +48,22 @@
     .tab-btn.active {
       @apply bg-white text-[#FF7F50] border-t-4 border-[#FF7F50];
     }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: flex !important;
+    }
   </style>
 </head>
 <body class="bg-gradient-to-r from-orange-100 to-rose-100 min-h-screen flex flex-col items-center">
 
   <!-- NAV TABS -->
   <div class="mt-8 flex space-x-4">
-    <button id="tab-compliments-btn" class="tab-btn active bg-white text-[#FF7F50] border-t-4 border-[#FF7F50]">
+    <button id="tab-compliments-btn" class="tab-btn active">
       <i class="fas fa-comment-dots mr-2"></i>Compliments
     </button>
-    <button id="tab-pops-btn" class="tab-btn text-gray-600 hover:text-[#FF7F50]">
+    <button id="tab-pops-btn" class="tab-btn">
       <i class="fas fa-music mr-2"></i>Top of the Pops
     </button>
   </div>
@@ -67,7 +94,6 @@
         <i class="fas fa-heart text-[#FF7F50] animate-pulse mx-2"></i>
       </h1>
       <ul class="space-y-4 text-left">
-        <!-- Encode spaces in paths as %20 -->
         <li class="flex items-center space-x-3">
           <i class="fas fa-heart text-[#FF7F50]"></i>
           <span>Interlude 1</span>
@@ -100,11 +126,8 @@
     const tabPops        = document.getElementById('tab-pops');
 
     function showTab(tab) {
-      // reset buttons
-      complimentsBtn.classList.remove('active');
-      popsBtn.classList.remove('active');
-      tabCompliments.classList.remove('active');
-      tabPops.classList.remove('active');
+      [complimentsBtn, popsBtn].forEach(btn => btn.classList.remove('active'));
+      [tabCompliments, tabPops].forEach(panel => panel.classList.remove('active'));
 
       if (tab === 'compliments') {
         complimentsBtn.classList.add('active');
@@ -118,7 +141,7 @@
     complimentsBtn.addEventListener('click', () => showTab('compliments'));
     popsBtn.addEventListener('click', () => showTab('pops'));
 
-    // === existing compliments JS below (unchanged) ===
+    // === existing compliments JS ===
     document.addEventListener('DOMContentLoaded', () => {
       const complimentText = document.getElementById('compliment-text');
       const loadingElement = document.getElementById('loading');
