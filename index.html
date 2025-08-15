@@ -182,7 +182,7 @@
         <div>
           <div class="flex items-center justify-between mb-3">
             <h2 class="text-xl font-semibold text-[#FF7F50]">Important Questions</h2>
-            <span class="soft-pill">5 • take your time</span>
+            
           </div>
           <ol id="convos-important" class="space-y-3 convo-important">
             <!-- Filled by JS -->
@@ -330,27 +330,27 @@
       // ——— Cuddly Convos logic ———
       // Questions provided by you (embedded to avoid external fetch fragility)
       const importantConversations = [
-        "Is potato a Lucas and faking it for pudding?",
-        "How has our philosophy to the banana changed since 2023?",
-        "What secret sneaky life ambitions do we hold?",
-        "What makes you feel most yourself?",
-        "Do we want a hobby together?"
+        "How to know a partner won't harm you and/or when to have children?",
+        "What does it mean to be married?",
+        "What are our expectations for Canada?",
+        "How to see eachother's souls better?",
+        "Who is in, and who is out, of our lives, and why?"
       ];
 
       // You provided 5 'other' questions in the file you pasted. The design asked for 10 other questions,
       // so I kept your 5 and added 5 gentle suggested prompts to reach 10. You can edit these directly below.
       const otherConversations = [
-        "How to know a partner won't harm you and/or when to have children?",
-        "What does it mean to be married?",
-        "What are our expectations for Canada?",
-        "How to see eachother's souls better?",
-        "Who is in, and who is out, of our lives, and why?",
-        // --- Suggested extras (editable) ---
-        "What's one small tradition we'd like to start together?",
-        "When do you feel most loved by me?",
-        "What's a dream holiday we want to plan in the next five years?",
-        "What's something you haven't told me but would like me to share?",
-        "What worries you most about the future, and how can I help?"
+        "Is potato a Lucas and faking it for pudding?",
+        "How has our philosophy to the banana changed since 2023?",
+        "What secret sneaky life ambitions do we hold?",
+        "What makes you feel most yourself?",
+        "Do we want a hobby together?",
+        // --- User-provided extras ---
+        "What is the most 'us' thing in the world, ie. what defines our spirit?",
+        "What inspires us about the other person?",
+        "What scares us when we think about a future together?",
+        "What is the happiest we have ever felt together?",
+        "Are there more mediums of communication we don't currently use?"
       ];
 
       const importantList = document.getElementById('convos-important');
