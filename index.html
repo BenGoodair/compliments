@@ -18,6 +18,11 @@
       85% { opacity: 1; transform: scale(1.1); }
       100% { opacity: 0; transform: scale(1); }
     }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
     .pop-word {
       position: absolute;
       font-weight: bold;
@@ -74,6 +79,48 @@
     .tab-content.active {
       display: flex;
     }
+
+    /* Question styles */
+    .question-card {
+      background: linear-gradient(135deg, #fff5f5 0%, #ffe4e1 100%);
+      border: 2px solid #FF7F50;
+      border-radius: 1rem;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .question-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 127, 80, 0.2);
+    }
+    .important-question {
+      background: linear-gradient(135deg, #fff0f5 0%, #ffd6cc 100%);
+      border: 3px solid #FF6347;
+      animation: heartbeat 3s ease-in-out infinite;
+    }
+    .question-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      background: #FF7F50;
+      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+      margin-right: 0.75rem;
+      flex-shrink: 0;
+    }
+    .heart-float {
+      position: absolute;
+      color: #FF7F50;
+      font-size: 0.75rem;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    .heart-float:nth-child(odd) {
+      animation-delay: 0.5s;
+    }
   </style>
 </head>
 <body class="bg-gradient-to-r from-orange-100 to-rose-100 min-h-screen flex flex-col items-center">
@@ -85,6 +132,9 @@
     </button>
     <button id="tab-pops-btn" class="tab-btn">
       <i class="fas fa-music mr-2"></i>Top of the Pops
+    </button>
+    <button id="tab-convos-btn" class="tab-btn">
+      <i class="fas fa-heart mr-2"></i>Cuddly Convos
     </button>
   </div>
 
@@ -158,34 +208,207 @@
     </div>
   </div>
 
+  <!-- CUDDLY CONVOS TAB CONTENT -->
+  <div id="tab-convos" class="tab-content">
+    <div class="bg-white shadow-2xl rounded-2xl p-8 text-center max-w-2xl w-full mx-4 relative overflow-hidden max-h-[80vh] overflow-y-auto">
+      <h1 class="text-3xl font-bold text-[#FF7F50] mb-6 relative">
+        <i class="fas fa-heart text-[#FF7F50] animate-pulse mx-2"></i>
+        Cuddly Convos
+        <i class="fas fa-heart text-[#FF7F50] animate-pulse mx-2"></i>
+        <div class="heart-float" style="top: -5px; right: 20px;">💕</div>
+        <div class="heart-float" style="top: -8px; left: 15px;">💖</div>
+      </h1>
+
+      <!-- Add Question Section -->
+      <div class="mb-6 p-4 bg-gradient-to-r from-pink-50 to-orange-50 rounded-xl border-2 border-dashed border-[#FF7F50]">
+        <h3 class="text-lg font-semibold text-[#FF7F50] mb-3">
+          <i class="fas fa-plus-circle mr-2"></i>Add Your Own Question
+        </h3>
+        <div class="flex flex-col space-y-2">
+          <input type="text" id="new-question-input" placeholder="What would you like to talk about? 💕" 
+                 class="px-3 py-2 border-2 border-[#FF7F50] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF7F50] focus:border-transparent">
+          <div class="flex space-x-2">
+            <button id="add-important-btn" class="flex-1 bg-[#FF6347] hover:bg-[#FF4500] text-white font-semibold py-2 px-4 rounded-lg transition transform hover:scale-105">
+              <i class="fas fa-star mr-1"></i>Important
+            </button>
+            <button id="add-other-btn" class="flex-1 bg-[#FF7F50] hover:bg-[#FF6347] text-white font-semibold py-2 px-4 rounded-lg transition transform hover:scale-105">
+              <i class="fas fa-heart mr-1"></i>Other
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Important Questions Section -->
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-[#FF6347] mb-4 relative">
+          <i class="fas fa-star mr-2"></i>
+          Important Questions
+          <i class="fas fa-star ml-2"></i>
+          <div class="heart-float" style="top: -3px; right: 5px;">⭐</div>
+        </h2>
+        <div id="important-questions" class="space-y-3"></div>
+      </div>
+
+      <!-- Other Questions Section -->
+      <div>
+        <h2 class="text-2xl font-bold text-[#FF7F50] mb-4 relative">
+          <i class="fas fa-heart mr-2"></i>
+          Other Cuddly Questions
+          <i class="fas fa-heart ml-2"></i>
+          <div class="heart-float" style="top: -3px; right: 10px;">💕</div>
+          <div class="heart-float" style="top: -6px; left: 5px;">💖</div>
+        </h2>
+        <div id="other-questions" class="space-y-3"></div>
+      </div>
+    </div>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // ——— Tab logic ———
       const complimentsBtn  = document.getElementById('tab-compliments-btn');
       const popsBtn         = document.getElementById('tab-pops-btn');
+      const convosBtn       = document.getElementById('tab-convos-btn');
       const tabCompliments  = document.getElementById('tab-compliments');
       const tabPops         = document.getElementById('tab-pops');
+      const tabConvos       = document.getElementById('tab-convos');
 
       function showTab(tab) {
         complimentsBtn.classList.remove('active');
         popsBtn.classList.remove('active');
+        convosBtn.classList.remove('active');
         tabCompliments.classList.remove('active');
         tabPops.classList.remove('active');
+        tabConvos.classList.remove('active');
 
         if (tab === 'compliments') {
           complimentsBtn.classList.add('active');
           tabCompliments.classList.add('active');
-        } else {
+        } else if (tab === 'pops') {
           popsBtn.classList.add('active');
           tabPops.classList.add('active');
+        } else {
+          convosBtn.classList.add('active');
+          tabConvos.classList.add('active');
         }
       }
 
       complimentsBtn.addEventListener('click', () => showTab('compliments'));
       popsBtn.addEventListener('click', () => showTab('pops'));
+      convosBtn.addEventListener('click', () => showTab('convos'));
 
+      // ——— Cuddly Convos logic ———
+      const importantQuestions = [
+        "What's one dream you have that you haven't shared with me yet? 💫",
+        "How do you want us to grow together in the next year? 🌱",
+        "What makes you feel most loved and appreciated by me? 💕",
+        "What's something you'd like us to work on together as a couple? 🤝",
+        "How can I better support you when you're feeling stressed or overwhelmed? 🫂"
+      ];
 
-      // ——— Compliment generator logic ———
+      const otherQuestions = [
+        "If we could teleport anywhere for a date night, where would we go? ✨",
+        "What's your favorite memory of us cuddling? 🥰",
+        "What silly thing always makes you think of me? 😄",
+        "If we were animals, what would we be and why? 🐾",
+        "What's your favorite way I show you affection? 💖",
+        "What would our dream blanket fort look like? 🏰",
+        "What song reminds you most of us? 🎵",
+        "If we could have any superpower as a couple, what would it be? 🦸‍♀️🦸‍♂️",
+        "What's the coziest thing we could do together right now? ☁️",
+        "What made you smile about us today? 😊"
+      ];
+
+      const importantContainer = document.getElementById('important-questions');
+      const otherContainer = document.getElementById('other-questions');
+      const newQuestionInput = document.getElementById('new-question-input');
+      const addImportantBtn = document.getElementById('add-important-btn');
+      const addOtherBtn = document.getElementById('add-other-btn');
+
+      let importantQuestionsArray = [...importantQuestions];
+      let otherQuestionsArray = [...otherQuestions];
+
+      function createQuestionCard(question, index, isImportant = false) {
+        const card = document.createElement('div');
+        card.className = `question-card ${isImportant ? 'important-question' : ''}`;
+        
+        card.innerHTML = `
+          <div class="flex items-start">
+            <span class="question-number">
+              ${isImportant ? '<i class="fas fa-star"></i>' : index + 1}
+            </span>
+            <div class="flex-grow">
+              <p class="text-left text-gray-800 font-medium">${question}</p>
+            </div>
+            <button class="delete-question ml-3 text-[#FF7F50] hover:text-[#FF6347] transition-colors" data-index="${index}" data-important="${isImportant}">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        `;
+
+        // Add delete functionality
+        const deleteBtn = card.querySelector('.delete-question');
+        deleteBtn.addEventListener('click', () => {
+          const isImportant = deleteBtn.dataset.important === 'true';
+          const index = parseInt(deleteBtn.dataset.index);
+          
+          if (isImportant) {
+            importantQuestionsArray.splice(index, 1);
+            renderImportantQuestions();
+          } else {
+            otherQuestionsArray.splice(index, 1);
+            renderOtherQuestions();
+          }
+        });
+
+        return card;
+      }
+
+      function renderImportantQuestions() {
+        importantContainer.innerHTML = '';
+        importantQuestionsArray.forEach((question, index) => {
+          const card = createQuestionCard(question, index, true);
+          importantContainer.appendChild(card);
+        });
+      }
+
+      function renderOtherQuestions() {
+        otherContainer.innerHTML = '';
+        otherQuestionsArray.forEach((question, index) => {
+          const card = createQuestionCard(question, index, false);
+          otherContainer.appendChild(card);
+        });
+      }
+
+      function addQuestion(isImportant) {
+        const questionText = newQuestionInput.value.trim();
+        if (!questionText) return;
+
+        if (isImportant) {
+          importantQuestionsArray.push(questionText);
+          renderImportantQuestions();
+        } else {
+          otherQuestionsArray.push(questionText);
+          renderOtherQuestions();
+        }
+
+        newQuestionInput.value = '';
+      }
+
+      addImportantBtn.addEventListener('click', () => addQuestion(true));
+      addOtherBtn.addEventListener('click', () => addQuestion(false));
+
+      newQuestionInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          addQuestion(false); // Default to other questions on Enter
+        }
+      });
+
+      // Initial render
+      renderImportantQuestions();
+      renderOtherQuestions();
+
+      // ——— Compliment generator logic (unchanged) ———
       const complimentText      = document.getElementById('compliment-text');
       const loadingElement      = document.getElementById('loading');
       const getComplimentBtn    = document.getElementById('get-compliment');
@@ -211,7 +434,7 @@
           compliments = text.split('\n').filter(c=>c.trim()).map(c=>c.trim());
           displayRandomCompliment();
         } catch {
-          complimentText.textContent = 'Ohhhhh, want to compliment you but I can’t right now';
+          complimentText.textContent = 'Ohhhhh, want to compliment you but I can't right now';
           setLoading(false);
         }
       }
