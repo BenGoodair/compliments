@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Pudding Compliments & Top of the Pops & Cuddly Convos</title>
+  <title>Pudding Compliments & Top of the Pops</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
@@ -74,26 +74,6 @@
     .tab-content.active {
       display: flex;
     }
-
-    /* Question styles */
-    .question-card {
-      background: linear-gradient(135deg, #FFF5F5, #FED7CC);
-      border: 2px solid #FF7F50;
-      border-radius: 1rem;
-      padding: 1rem;
-      margin: 0.75rem 0;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-    .question-card:hover {
-      transform: scale(1.02);
-      box-shadow: 0 8px 25px rgba(255, 127, 80, 0.2);
-    }
-    .question-important {
-      background: linear-gradient(135deg, #FFEAA7, #FED7CC);
-      border-color: #FF6B35;
-      box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
-    }
   </style>
 </head>
 <body class="bg-gradient-to-r from-orange-100 to-rose-100 min-h-screen flex flex-col items-center">
@@ -105,9 +85,6 @@
     </button>
     <button id="tab-pops-btn" class="tab-btn">
       <i class="fas fa-music mr-2"></i>Top of the Pops
-    </button>
-    <button id="tab-convos-btn" class="tab-btn">
-      <i class="fas fa-heart mr-2"></i>Cuddly Convos
     </button>
   </div>
 
@@ -181,82 +158,31 @@
     </div>
   </div>
 
-  <!-- CUDDLY CONVOS TAB CONTENT -->
-  <div id="tab-convos" class="tab-content">
-    <div class="bg-white shadow-2xl rounded-2xl p-6 text-center max-w-2xl w-full mx-4 relative overflow-hidden max-h-[80vh] overflow-y-auto">
-      <h1 class="text-3xl font-bold text-[#FF7F50] mb-6">
-        <i class="fas fa-heart text-[#FF7F50] animate-pulse mx-2"></i>
-        Cuddly Convos 💕
-        <i class="fas fa-heart text-[#FF7F50] animate-pulse mx-2"></i>
-      </h1>
-      
-      <div id="convos-loading" class="animate-pulse mb-6">
-        <i class="fas fa-heart text-[#FF7F50] text-4xl"></i>
-        <p class="text-[#FF7F50] mt-2">Loading our special questions...</p>
-      </div>
-
-      <div id="convos-content" style="display: none;">
-        <!-- Important Questions -->
-        <div class="mb-8">
-          <h2 class="text-2xl font-bold text-[#FF6B35] mb-4 flex items-center justify-center">
-            <i class="fas fa-star text-yellow-400 mr-2"></i>
-            Important Pudding Conversations
-            <i class="fas fa-star text-yellow-400 ml-2"></i>
-          </h2>
-          <div id="important-questions"></div>
-        </div>
-
-        <!-- Other Questions -->
-        <div>
-          <h2 class="text-xl font-bold text-[#FF7F50] mb-4 flex items-center justify-center">
-            <i class="fas fa-heart text-[#FF7F50] mr-2"></i>
-            Other Cuddly Questions
-            <i class="fas fa-heart text-[#FF7F50] ml-2"></i>
-          </h2>
-          <div id="other-questions"></div>
-        </div>
-      </div>
-
-      <div id="convos-error" style="display: none;">
-        <p class="text-[#FF7F50] text-lg">Ohhhhh, can't load our questions right now 💕</p>
-        <p class="text-gray-600 text-sm mt-2">But we can still cuddle and talk about anything!</p>
-      </div>
-    </div>
-  </div>
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // ——— Tab logic ———
       const complimentsBtn  = document.getElementById('tab-compliments-btn');
       const popsBtn         = document.getElementById('tab-pops-btn');
-      const convosBtn       = document.getElementById('tab-convos-btn');
       const tabCompliments  = document.getElementById('tab-compliments');
       const tabPops         = document.getElementById('tab-pops');
-      const tabConvos       = document.getElementById('tab-convos');
 
       function showTab(tab) {
         complimentsBtn.classList.remove('active');
         popsBtn.classList.remove('active');
-        convosBtn.classList.remove('active');
         tabCompliments.classList.remove('active');
         tabPops.classList.remove('active');
-        tabConvos.classList.remove('active');
 
         if (tab === 'compliments') {
           complimentsBtn.classList.add('active');
           tabCompliments.classList.add('active');
-        } else if (tab === 'pops') {
+        } else {
           popsBtn.classList.add('active');
           tabPops.classList.add('active');
-        } else if (tab === 'convos') {
-          convosBtn.classList.add('active');
-          tabConvos.classList.add('active');
         }
       }
 
       complimentsBtn.addEventListener('click', () => showTab('compliments'));
       popsBtn.addEventListener('click', () => showTab('pops'));
-      convosBtn.addEventListener('click', () => showTab('convos'));
 
 
       // ——— Compliment generator logic ———
@@ -285,7 +211,7 @@
           compliments = text.split('\n').filter(c=>c.trim()).map(c=>c.trim());
           displayRandomCompliment();
         } catch {
-          complimentText.textContent = 'Ohhhhh, want to compliment you but I can't right now';
+          complimentText.textContent = 'Ohhhhh, want to compliment you but I can’t right now';
           setLoading(false);
         }
       }
@@ -350,72 +276,6 @@
 
       // kick it all off
       fetchCompliments();
-
-
-      // ——— Cuddly Convos logic ———
-      const IMPORTANT_CONVOS_URL = 'https://raw.githubusercontent.com/BenGoodair/compliments/main/important_conversations.txt';
-      const OTHER_CONVOS_URL = 'https://raw.githubusercontent.com/BenGoodair/compliments/main/other_conversations.txt';
-      
-      const convosLoading = document.getElementById('convos-loading');
-      const convosContent = document.getElementById('convos-content');
-      const convosError = document.getElementById('convos-error');
-      const importantQuestionsDiv = document.getElementById('important-questions');
-      const otherQuestionsDiv = document.getElementById('other-questions');
-
-      function createQuestionCard(question, isImportant = false) {
-        const card = document.createElement('div');
-        card.className = `question-card ${isImportant ? 'question-important' : ''}`;
-        
-        const heartIcon = isImportant ? '⭐' : '💕';
-        card.innerHTML = `
-          <div class="flex items-start">
-            <span class="text-2xl mr-3 mt-1">${heartIcon}</span>
-            <p class="text-gray-800 text-left leading-relaxed flex-1">${question}</p>
-          </div>
-        `;
-        
-        return card;
-      }
-
-      async function loadConversations() {
-        try {
-          const [importantRes, otherRes] = await Promise.all([
-            fetch(IMPORTANT_CONVOS_URL),
-            fetch(OTHER_CONVOS_URL)
-          ]);
-
-          const importantText = await importantRes.text();
-          const otherText = await otherRes.text();
-
-          const importantQuestions = importantText.split('\n').filter(q => q.trim()).map(q => q.trim());
-          const otherQuestions = otherText.split('\n').filter(q => q.trim()).map(q => q.trim());
-
-          // Clear containers
-          importantQuestionsDiv.innerHTML = '';
-          otherQuestionsDiv.innerHTML = '';
-
-          // Add important questions
-          importantQuestions.forEach(question => {
-            importantQuestionsDiv.appendChild(createQuestionCard(question, true));
-          });
-
-          // Add other questions
-          otherQuestions.forEach(question => {
-            otherQuestionsDiv.appendChild(createQuestionCard(question, false));
-          });
-
-          // Show content
-          convosLoading.style.display = 'none';
-          convosContent.style.display = 'block';
-
-        } catch (error) {
-          convosLoading.style.display = 'none';
-          convosError.style.display = 'block';
-        }
-      }
-
-      // Load conversations when page loads
-      loadConversations();
     });
   </script>
 </body>
