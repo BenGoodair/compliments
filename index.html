@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Pudding Compliments & Top of the Pops</title>
+  <title>Pudding Compliments & Top of the Pops & Cuddly Convos</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
@@ -18,10 +18,10 @@
       85% { opacity: 1; transform: scale(1.1); }
       100% { opacity: 0; transform: scale(1); }
     }
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-10px); }
-      60% { transform: translateY(-5px); }
+    @keyframes sparkle {
+      0% { opacity: 0; transform: scale(0) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1) rotate(180deg); }
+      100% { opacity: 0; transform: scale(0) rotate(360deg); }
     }
     .pop-word {
       position: absolute;
@@ -80,53 +80,57 @@
       display: flex;
     }
 
-    /* Question styles */
+    /* Question card styles */
     .question-card {
-      background: linear-gradient(135deg, #fff5f5 0%, #ffe4e1 100%);
+      background: linear-gradient(135deg, #FFF5F5 0%, #FED7CC 100%);
       border: 2px solid #FF7F50;
       border-radius: 1rem;
       padding: 1rem;
       margin: 0.5rem 0;
       transition: all 0.3s ease;
       position: relative;
+      overflow: hidden;
     }
     .question-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255, 127, 80, 0.2);
+      box-shadow: 0 10px 25px rgba(255, 127, 80, 0.2);
+    }
+    .question-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #FF7F50, #FF6347, #FFA07A, #FF7F50);
+      border-radius: 1rem;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .question-card:hover::before {
+      opacity: 0.3;
     }
     .important-question {
-      background: linear-gradient(135deg, #fff0f5 0%, #ffd6cc 100%);
+      background: linear-gradient(135deg, #FFF0F0 0%, #FFE0E0 100%);
       border: 3px solid #FF6347;
-      animation: heartbeat 3s ease-in-out infinite;
     }
-    .question-number {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 2rem;
-      height: 2rem;
-      background: #FF7F50;
-      color: white;
-      border-radius: 50%;
-      font-weight: bold;
-      margin-right: 0.75rem;
-      flex-shrink: 0;
+    .important-question::before {
+      background: linear-gradient(45deg, #FF6347, #FF4500, #FF7F50, #FF6347);
     }
-    .heart-float {
+    .floating-heart {
       position: absolute;
       color: #FF7F50;
-      font-size: 0.75rem;
-      animation: bounce 2s ease-in-out infinite;
-    }
-    .heart-float:nth-child(odd) {
-      animation-delay: 0.5s;
+      font-size: 0.8rem;
+      animation: sparkle 2s infinite;
+      pointer-events: none;
     }
   </style>
 </head>
 <body class="bg-gradient-to-r from-orange-100 to-rose-100 min-h-screen flex flex-col items-center">
 
   <!-- NAV TABS -->
-  <div class="mt-8 flex space-x-2">
+  <div class="mt-8 flex space-x-2 flex-wrap justify-center">
     <button id="tab-compliments-btn" class="tab-btn active">
       <i class="fas fa-comment-dots mr-2"></i>Compliments
     </button>
@@ -210,55 +214,115 @@
 
   <!-- CUDDLY CONVOS TAB CONTENT -->
   <div id="tab-convos" class="tab-content">
-    <div class="bg-white shadow-2xl rounded-2xl p-8 text-center max-w-2xl w-full mx-4 relative overflow-hidden max-h-[80vh] overflow-y-auto">
-      <h1 class="text-3xl font-bold text-[#FF7F50] mb-6 relative">
+    <div class="bg-white shadow-2xl rounded-2xl p-6 max-w-2xl w-full mx-4 relative overflow-hidden" style="max-height: 80vh; overflow-y: auto;">
+      <h1 class="text-3xl font-bold text-[#FF7F50] mb-6 text-center">
         <i class="fas fa-heart text-[#FF7F50] animate-pulse mx-2"></i>
         Cuddly Convos
         <i class="fas fa-heart text-[#FF7F50] animate-pulse mx-2"></i>
-        <div class="heart-float" style="top: -5px; right: 20px;">💕</div>
-        <div class="heart-float" style="top: -8px; left: 15px;">💖</div>
       </h1>
+      
+      <!-- Important Questions Section -->
+      <div class="mb-8">
+        <h2 class="text-xl font-bold text-[#FF6347] mb-4 text-center">
+          <i class="fas fa-star mr-2"></i>The Big Five<i class="fas fa-star ml-2"></i>
+        </h2>
+        
+        <div class="question-card important-question">
+          <div class="floating-heart" style="top: 10px; right: 15px;">💕</div>
+          <h3 class="text-lg font-semibold text-[#FF6347] mb-2">
+            <i class="fas fa-heart mr-2"></i>Dreams & Future
+          </h3>
+          <p class="text-gray-700">What's one dream you've never told me about that you'd love us to explore together?</p>
+        </div>
 
-      <!-- Add Question Section -->
-      <div class="mb-6 p-4 bg-gradient-to-r from-pink-50 to-orange-50 rounded-xl border-2 border-dashed border-[#FF7F50]">
-        <h3 class="text-lg font-semibold text-[#FF7F50] mb-3">
-          <i class="fas fa-plus-circle mr-2"></i>Add Your Own Question
-        </h3>
-        <div class="flex flex-col space-y-2">
-          <input type="text" id="new-question-input" placeholder="What would you like to talk about? 💕" 
-                 class="px-3 py-2 border-2 border-[#FF7F50] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF7F50] focus:border-transparent">
-          <div class="flex space-x-2">
-            <button id="add-important-btn" class="flex-1 bg-[#FF6347] hover:bg-[#FF4500] text-white font-semibold py-2 px-4 rounded-lg transition transform hover:scale-105">
-              <i class="fas fa-star mr-1"></i>Important
-            </button>
-            <button id="add-other-btn" class="flex-1 bg-[#FF7F50] hover:bg-[#FF6347] text-white font-semibold py-2 px-4 rounded-lg transition transform hover:scale-105">
-              <i class="fas fa-heart mr-1"></i>Other
-            </button>
-          </div>
+        <div class="question-card important-question">
+          <div class="floating-heart" style="top: 10px; left: 15px; animation-delay: 0.5s;">💖</div>
+          <h3 class="text-lg font-semibold text-[#FF6347] mb-2">
+            <i class="fas fa-heart mr-2"></i>Love Language
+          </h3>
+          <p class="text-gray-700">How do you feel most loved by me, and is there a way I could show love that would make you melt even more?</p>
+        </div>
+
+        <div class="question-card important-question">
+          <div class="floating-heart" style="bottom: 10px; right: 20px; animation-delay: 1s;">💝</div>
+          <h3 class="text-lg font-semibold text-[#FF6347] mb-2">
+            <i class="fas fa-heart mr-2"></i>Growing Together
+          </h3>
+          <p class="text-gray-700">What's something you'd love for us to learn or experience together that would bring us even closer?</p>
+        </div>
+
+        <div class="question-card important-question">
+          <div class="floating-heart" style="top: 15px; right: 25px; animation-delay: 1.5s;">💗</div>
+          <h3 class="text-lg font-semibold text-[#FF6347] mb-2">
+            <i class="fas fa-heart mr-2"></i>Our Story
+          </h3>
+          <p class="text-gray-700">What moment in our relationship do you treasure most, and what moment are you most excited to create?</p>
+        </div>
+
+        <div class="question-card important-question">
+          <div class="floating-heart" style="bottom: 10px; left: 10px; animation-delay: 2s;">💞</div>
+          <h3 class="text-lg font-semibold text-[#FF6347] mb-2">
+            <i class="fas fa-heart mr-2"></i>Perfect Day
+          </h3>
+          <p class="text-gray-700">If we could have one perfect day together with no limits, what would it look like from sunrise to sunset?</p>
         </div>
       </div>
 
-      <!-- Important Questions Section -->
-      <div class="mb-8">
-        <h2 class="text-2xl font-bold text-[#FF6347] mb-4 relative">
-          <i class="fas fa-star mr-2"></i>
-          Important Questions
-          <i class="fas fa-star ml-2"></i>
-          <div class="heart-float" style="top: -3px; right: 5px;">⭐</div>
-        </h2>
-        <div id="important-questions" class="space-y-3"></div>
-      </div>
-
-      <!-- Other Questions Section -->
+      <!-- Other Fun Questions Section -->
       <div>
-        <h2 class="text-2xl font-bold text-[#FF7F50] mb-4 relative">
-          <i class="fas fa-heart mr-2"></i>
-          Other Cuddly Questions
-          <i class="fas fa-heart ml-2"></i>
-          <div class="heart-float" style="top: -3px; right: 10px;">💕</div>
-          <div class="heart-float" style="top: -6px; left: 5px;">💖</div>
+        <h2 class="text-xl font-bold text-[#FF7F50] mb-4 text-center">
+          <i class="fas fa-comments mr-2"></i>Cuddle & Chat<i class="fas fa-comments ml-2"></i>
         </h2>
-        <div id="other-questions" class="space-y-3"></div>
+
+        <div class="question-card">
+          <div class="floating-heart" style="top: 10px; right: 20px;">💕</div>
+          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Superpower for Love:</strong> If you could have any superpower just to make me happier, what would it be?</p>
+        </div>
+
+        <div class="question-card">
+          <div class="floating-heart" style="bottom: 10px; left: 15px; animation-delay: 0.3s;">💖</div>
+          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Comfort Food Memory:</strong> What's your favorite comfort food and what happy memory does it remind you of?</p>
+        </div>
+
+        <div class="question-card">
+          <div class="floating-heart" style="top: 15px; left: 25px; animation-delay: 0.6s;">💝</div>
+          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Secret Talent:</strong> What's something you're secretly really good at that might surprise me?</p>
+        </div>
+
+        <div class="question-card">
+          <div class="floating-heart" style="bottom: 15px; right: 10px; animation-delay: 0.9s;">💗</div>
+          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Time Travel Date:</strong> If we could go on a date in any time period in history, where and when would you choose?</p>
+        </div>
+
+        <div class="question-card">
+          <div class="floating-heart" style="top: 10px; right: 30px; animation-delay: 1.2s;">💞</div>
+          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Animal Spirit:</strong> If you were an animal for a day, what would you be and what would we do together?</p>
+        </div>
+
+        <div class="question-card">
+          <div class="floating-heart" style="bottom: 10px; left: 20px; animation-delay: 1.5s;">💘</div>
+          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Cozy Corner:</strong> What's your idea of the perfect cozy evening at home with me?</p>
+        </div>
+
+        <div class="question-card">
+          <div class="floating-heart" style="top: 20px; left: 10px; animation-delay: 1.8s;">💌</div>
+          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Childhood Wonder:</strong> What's something from your childhood that still makes you smile when you think about it?</p>
+        </div>
+
+        <div class="question-card">
+          <div class="floating-heart" style="bottom: 20px; right: 25px; animation-delay: 2.1s;">❤️</div>
+          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Music & Memories:</strong> What song always makes you think of us or puts you in a happy mood?</p>
+        </div>
+
+        <div class="question-card">
+          <div class="floating-heart" style="top: 15px; right: 15px; animation-delay: 2.4s;">💕</div>
+          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Adventure Bucket:</strong> What's a silly or fun adventure you've always wanted to try with someone special?</p>
+        </div>
+
+        <div class="question-card">
+          <div class="floating-heart" style="bottom: 10px; left: 25px; animation-delay: 2.7s;">💖</div>
+          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Little Joys:</strong> What's a tiny thing that happened recently that made you smile?</p>
+        </div>
       </div>
     </div>
   </div>
@@ -274,6 +338,7 @@
       const tabConvos       = document.getElementById('tab-convos');
 
       function showTab(tab) {
+        // Remove active from all buttons and tabs
         complimentsBtn.classList.remove('active');
         popsBtn.classList.remove('active');
         convosBtn.classList.remove('active');
@@ -281,13 +346,14 @@
         tabPops.classList.remove('active');
         tabConvos.classList.remove('active');
 
+        // Add active to selected tab
         if (tab === 'compliments') {
           complimentsBtn.classList.add('active');
           tabCompliments.classList.add('active');
         } else if (tab === 'pops') {
           popsBtn.classList.add('active');
           tabPops.classList.add('active');
-        } else {
+        } else if (tab === 'convos') {
           convosBtn.classList.add('active');
           tabConvos.classList.add('active');
         }
@@ -297,124 +363,13 @@
       popsBtn.addEventListener('click', () => showTab('pops'));
       convosBtn.addEventListener('click', () => showTab('convos'));
 
-      // ——— Cuddly Convos logic ———
-      const importantQuestions = [
-        "What's one dream you have that you haven't shared with me yet? 💫",
-        "How do you want us to grow together in the next year? 🌱",
-        "What makes you feel most loved and appreciated by me? 💕",
-        "What's something you'd like us to work on together as a couple? 🤝",
-        "How can I better support you when you're feeling stressed or overwhelmed? 🫂"
-      ];
-
-      const otherQuestions = [
-        "If we could teleport anywhere for a date night, where would we go? ✨",
-        "What's your favorite memory of us cuddling? 🥰",
-        "What silly thing always makes you think of me? 😄",
-        "If we were animals, what would we be and why? 🐾",
-        "What's your favorite way I show you affection? 💖",
-        "What would our dream blanket fort look like? 🏰",
-        "What song reminds you most of us? 🎵",
-        "If we could have any superpower as a couple, what would it be? 🦸‍♀️🦸‍♂️",
-        "What's the coziest thing we could do together right now? ☁️",
-        "What made you smile about us today? 😊"
-      ];
-
-      const importantContainer = document.getElementById('important-questions');
-      const otherContainer = document.getElementById('other-questions');
-      const newQuestionInput = document.getElementById('new-question-input');
-      const addImportantBtn = document.getElementById('add-important-btn');
-      const addOtherBtn = document.getElementById('add-other-btn');
-
-      let importantQuestionsArray = [...importantQuestions];
-      let otherQuestionsArray = [...otherQuestions];
-
-      function createQuestionCard(question, index, isImportant = false) {
-        const card = document.createElement('div');
-        card.className = `question-card ${isImportant ? 'important-question' : ''}`;
-        
-        card.innerHTML = `
-          <div class="flex items-start">
-            <span class="question-number">
-              ${isImportant ? '<i class="fas fa-star"></i>' : index + 1}
-            </span>
-            <div class="flex-grow">
-              <p class="text-left text-gray-800 font-medium">${question}</p>
-            </div>
-            <button class="delete-question ml-3 text-[#FF7F50] hover:text-[#FF6347] transition-colors" data-index="${index}" data-important="${isImportant}">
-              <i class="fas fa-trash-alt"></i>
-            </button>
-          </div>
-        `;
-
-        // Add delete functionality
-        const deleteBtn = card.querySelector('.delete-question');
-        deleteBtn.addEventListener('click', () => {
-          const isImportant = deleteBtn.dataset.important === 'true';
-          const index = parseInt(deleteBtn.dataset.index);
-          
-          if (isImportant) {
-            importantQuestionsArray.splice(index, 1);
-            renderImportantQuestions();
-          } else {
-            otherQuestionsArray.splice(index, 1);
-            renderOtherQuestions();
-          }
-        });
-
-        return card;
-      }
-
-      function renderImportantQuestions() {
-        importantContainer.innerHTML = '';
-        importantQuestionsArray.forEach((question, index) => {
-          const card = createQuestionCard(question, index, true);
-          importantContainer.appendChild(card);
-        });
-      }
-
-      function renderOtherQuestions() {
-        otherContainer.innerHTML = '';
-        otherQuestionsArray.forEach((question, index) => {
-          const card = createQuestionCard(question, index, false);
-          otherContainer.appendChild(card);
-        });
-      }
-
-      function addQuestion(isImportant) {
-        const questionText = newQuestionInput.value.trim();
-        if (!questionText) return;
-
-        if (isImportant) {
-          importantQuestionsArray.push(questionText);
-          renderImportantQuestions();
-        } else {
-          otherQuestionsArray.push(questionText);
-          renderOtherQuestions();
-        }
-
-        newQuestionInput.value = '';
-      }
-
-      addImportantBtn.addEventListener('click', () => addQuestion(true));
-      addOtherBtn.addEventListener('click', () => addQuestion(false));
-
-      newQuestionInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          addQuestion(false); // Default to other questions on Enter
-        }
-      });
-
-      // Initial render
-      renderImportantQuestions();
-      renderOtherQuestions();
-
-      // ——— Compliment generator logic (unchanged) ———
+      // ——— Compliment generator logic ———
       const complimentText      = document.getElementById('compliment-text');
       const loadingElement      = document.getElementById('loading');
       const getComplimentBtn    = document.getElementById('get-compliment');
       const complimentContainer = document.getElementById('compliment-container');
       const popWordContainer    = document.getElementById('pop-word-container');
-      const mainBox             = complimentContainer.closest('.bg-white');
+      const mainBox             = complimentContainer?.closest('.bg-white');
 
       const COMPLIMENTS_URL = 'https://raw.githubusercontent.com/BenGoodair/compliments/main/compliments.txt';
       const popWords = ["MWAH","KHOM","GRAB","Squeeeeze","rubbiees","POUNCE","cuddles","chomp","eat me","nuzzzleess","mümmeln","kisssiieeeeees","smooochieeess","my puddddinggg","mwwwwah","mwah mwah mwah"];
@@ -422,8 +377,8 @@
       let compliments = [], currentIndex = -1;
 
       function setLoading(isLoading) {
-        complimentText.style.display = isLoading ? 'none' : 'block';
-        loadingElement.style.display = isLoading ? 'block' : 'none';
+        if (complimentText) complimentText.style.display = isLoading ? 'none' : 'block';
+        if (loadingElement) loadingElement.style.display = isLoading ? 'block' : 'none';
       }
 
       async function fetchCompliments() {
@@ -434,7 +389,7 @@
           compliments = text.split('\n').filter(c=>c.trim()).map(c=>c.trim());
           displayRandomCompliment();
         } catch {
-          complimentText.textContent = 'Ohhhhh, want to compliment you but I can't right now';
+          if (complimentText) complimentText.textContent = 'Ohhhhh, want to compliment you but I can't right now';
           setLoading(false);
         }
       }
@@ -449,6 +404,7 @@
       }
 
       function createPopWord() {
+        if (!mainBox || !popWordContainer) return;
         const word = popWords[Math.floor(Math.random()*popWords.length)];
         const el   = document.createElement('div');
         el.textContent = word;
@@ -467,35 +423,43 @@
         el.style.top        = `${top}px`;
         el.style.transform  = `rotate(${ -30 + Math.random()*60 }deg)`;
         popWordContainer.appendChild(el);
-        setTimeout(() => popWordContainer.removeChild(el), 1800);
+        setTimeout(() => {
+          if (popWordContainer.contains(el)) popWordContainer.removeChild(el);
+        }, 1800);
       }
 
       function displayRandomCompliment() {
         if (!compliments.length) {
-          complimentText.textContent = 'No compliments!';
+          if (complimentText) complimentText.textContent = 'No compliments!';
           setLoading(false);
           return;
         }
         setLoading(true);
         setTimeout(() => {
-          complimentText.textContent = getRandomCompliment();
+          if (complimentText) complimentText.textContent = getRandomCompliment();
           setLoading(false);
-          complimentContainer.classList.add('opacity-transition');
-          setTimeout(() => complimentContainer.classList.remove('opacity-transition'), 300);
+          if (complimentContainer) {
+            complimentContainer.classList.add('opacity-transition');
+            setTimeout(() => complimentContainer.classList.remove('opacity-transition'), 300);
+          }
           const count = 3 + Math.floor(Math.random()*4);
           for (let i=0; i<count; i++) setTimeout(createPopWord, i*200);
         }, 400);
       }
 
-      getComplimentBtn.addEventListener('mouseenter', () => {
-        getComplimentBtn.querySelector('i').style.animation = 'heartbeat 1s infinite';
-      });
-      getComplimentBtn.addEventListener('mouseleave', () => {
-        getComplimentBtn.querySelector('i').style.animation = '';
-      });
-      getComplimentBtn.addEventListener('click', () => {
-        if (compliments.length) displayRandomCompliment();
-      });
+      if (getComplimentBtn) {
+        getComplimentBtn.addEventListener('mouseenter', () => {
+          const icon = getComplimentBtn.querySelector('i');
+          if (icon) icon.style.animation = 'heartbeat 1s infinite';
+        });
+        getComplimentBtn.addEventListener('mouseleave', () => {
+          const icon = getComplimentBtn.querySelector('i');
+          if (icon) icon.style.animation = '';
+        });
+        getComplimentBtn.addEventListener('click', () => {
+          if (compliments.length) displayRandomCompliment();
+        });
+      }
 
       // kick it all off
       fetchCompliments();
