@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Pudding Compliments & Top of the Pops & Cuddly Convos</title>
+  <title>Special Compliments & Top of the Pops</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
@@ -17,11 +17,6 @@
       15% { opacity: 1; transform: scale(1.1); }
       85% { opacity: 1; transform: scale(1.1); }
       100% { opacity: 0; transform: scale(1); }
-    }
-    @keyframes sparkle {
-      0% { opacity: 0; transform: scale(0) rotate(0deg); }
-      50% { opacity: 1; transform: scale(1) rotate(180deg); }
-      100% { opacity: 0; transform: scale(0) rotate(360deg); }
     }
     .pop-word {
       position: absolute;
@@ -79,66 +74,17 @@
     .tab-content.active {
       display: flex;
     }
-
-    /* Question card styles */
-    .question-card {
-      background: linear-gradient(135deg, #FFF5F5 0%, #FED7CC 100%);
-      border: 2px solid #FF7F50;
-      border-radius: 1rem;
-      padding: 1rem;
-      margin: 0.5rem 0;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .question-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(255, 127, 80, 0.2);
-    }
-    .question-card::before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(45deg, #FF7F50, #FF6347, #FFA07A, #FF7F50);
-      border-radius: 1rem;
-      z-index: -1;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .question-card:hover::before {
-      opacity: 0.3;
-    }
-    .important-question {
-      background: linear-gradient(135deg, #FFF0F0 0%, #FFE0E0 100%);
-      border: 3px solid #FF6347;
-    }
-    .important-question::before {
-      background: linear-gradient(45deg, #FF6347, #FF4500, #FF7F50, #FF6347);
-    }
-    .floating-heart {
-      position: absolute;
-      color: #FF7F50;
-      font-size: 0.8rem;
-      animation: sparkle 2s infinite;
-      pointer-events: none;
-    }
   </style>
 </head>
 <body class="bg-gradient-to-r from-orange-100 to-rose-100 min-h-screen flex flex-col items-center">
 
   <!-- NAV TABS -->
-  <div class="mt-8 flex space-x-2 flex-wrap justify-center">
+  <div class="mt-8 flex space-x-2">
     <button id="tab-compliments-btn" class="tab-btn active">
       <i class="fas fa-comment-dots mr-2"></i>Compliments
     </button>
     <button id="tab-pops-btn" class="tab-btn">
       <i class="fas fa-music mr-2"></i>Top of the Pops
-    </button>
-    <button id="tab-convos-btn" class="tab-btn">
-      <i class="fas fa-heart mr-2"></i>Cuddly Convos
     </button>
   </div>
 
@@ -206,124 +152,9 @@
     	<li class="flex items-center space-x-3">
           <i class="fas fa-heart text-[#FF7F50]"></i>
           <span>Track 6 - Outro</span>
-          <audio controls src="Top%20of%20the%20Pops/Track%206%20-%20Outro.m4a" class="ml-auto"></audio>
+          <audio controls src="Top%20of%20the%20Pops/Track%206%20.m4a" class="ml-auto"></audio>
         </li>
       </ul>
-    </div>
-  </div>
-
-  <!-- CUDDLY CONVOS TAB CONTENT -->
-  <div id="tab-convos" class="tab-content">
-    <div class="bg-white shadow-2xl rounded-2xl p-6 max-w-2xl w-full mx-4 relative overflow-hidden" style="max-height: 80vh; overflow-y: auto;">
-      <h1 class="text-3xl font-bold text-[#FF7F50] mb-6 text-center">
-        <i class="fas fa-heart text-[#FF7F50] animate-pulse mx-2"></i>
-        Cuddly Convos
-        <i class="fas fa-heart text-[#FF7F50] animate-pulse mx-2"></i>
-      </h1>
-      
-      <!-- Important Questions Section -->
-      <div class="mb-8">
-        <h2 class="text-xl font-bold text-[#FF6347] mb-4 text-center">
-          <i class="fas fa-star mr-2"></i>The Big Five<i class="fas fa-star ml-2"></i>
-        </h2>
-        
-        <div class="question-card important-question">
-          <div class="floating-heart" style="top: 10px; right: 15px;">💕</div>
-          <h3 class="text-lg font-semibold text-[#FF6347] mb-2">
-            <i class="fas fa-heart mr-2"></i>Dreams & Future
-          </h3>
-          <p class="text-gray-700">What's one dream you've never told me about that you'd love us to explore together?</p>
-        </div>
-
-        <div class="question-card important-question">
-          <div class="floating-heart" style="top: 10px; left: 15px; animation-delay: 0.5s;">💖</div>
-          <h3 class="text-lg font-semibold text-[#FF6347] mb-2">
-            <i class="fas fa-heart mr-2"></i>Love Language
-          </h3>
-          <p class="text-gray-700">How do you feel most loved by me, and is there a way I could show love that would make you melt even more?</p>
-        </div>
-
-        <div class="question-card important-question">
-          <div class="floating-heart" style="bottom: 10px; right: 20px; animation-delay: 1s;">💝</div>
-          <h3 class="text-lg font-semibold text-[#FF6347] mb-2">
-            <i class="fas fa-heart mr-2"></i>Growing Together
-          </h3>
-          <p class="text-gray-700">What's something you'd love for us to learn or experience together that would bring us even closer?</p>
-        </div>
-
-        <div class="question-card important-question">
-          <div class="floating-heart" style="top: 15px; right: 25px; animation-delay: 1.5s;">💗</div>
-          <h3 class="text-lg font-semibold text-[#FF6347] mb-2">
-            <i class="fas fa-heart mr-2"></i>Our Story
-          </h3>
-          <p class="text-gray-700">What moment in our relationship do you treasure most, and what moment are you most excited to create?</p>
-        </div>
-
-        <div class="question-card important-question">
-          <div class="floating-heart" style="bottom: 10px; left: 10px; animation-delay: 2s;">💞</div>
-          <h3 class="text-lg font-semibold text-[#FF6347] mb-2">
-            <i class="fas fa-heart mr-2"></i>Perfect Day
-          </h3>
-          <p class="text-gray-700">If we could have one perfect day together with no limits, what would it look like from sunrise to sunset?</p>
-        </div>
-      </div>
-
-      <!-- Other Fun Questions Section -->
-      <div>
-        <h2 class="text-xl font-bold text-[#FF7F50] mb-4 text-center">
-          <i class="fas fa-comments mr-2"></i>Cuddle & Chat<i class="fas fa-comments ml-2"></i>
-        </h2>
-
-        <div class="question-card">
-          <div class="floating-heart" style="top: 10px; right: 20px;">💕</div>
-          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Superpower for Love:</strong> If you could have any superpower just to make me happier, what would it be?</p>
-        </div>
-
-        <div class="question-card">
-          <div class="floating-heart" style="bottom: 10px; left: 15px; animation-delay: 0.3s;">💖</div>
-          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Comfort Food Memory:</strong> What's your favorite comfort food and what happy memory does it remind you of?</p>
-        </div>
-
-        <div class="question-card">
-          <div class="floating-heart" style="top: 15px; left: 25px; animation-delay: 0.6s;">💝</div>
-          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Secret Talent:</strong> What's something you're secretly really good at that might surprise me?</p>
-        </div>
-
-        <div class="question-card">
-          <div class="floating-heart" style="bottom: 15px; right: 10px; animation-delay: 0.9s;">💗</div>
-          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Time Travel Date:</strong> If we could go on a date in any time period in history, where and when would you choose?</p>
-        </div>
-
-        <div class="question-card">
-          <div class="floating-heart" style="top: 10px; right: 30px; animation-delay: 1.2s;">💞</div>
-          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Animal Spirit:</strong> If you were an animal for a day, what would you be and what would we do together?</p>
-        </div>
-
-        <div class="question-card">
-          <div class="floating-heart" style="bottom: 10px; left: 20px; animation-delay: 1.5s;">💘</div>
-          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Cozy Corner:</strong> What's your idea of the perfect cozy evening at home with me?</p>
-        </div>
-
-        <div class="question-card">
-          <div class="floating-heart" style="top: 20px; left: 10px; animation-delay: 1.8s;">💌</div>
-          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Childhood Wonder:</strong> What's something from your childhood that still makes you smile when you think about it?</p>
-        </div>
-
-        <div class="question-card">
-          <div class="floating-heart" style="bottom: 20px; right: 25px; animation-delay: 2.1s;">❤️</div>
-          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Music & Memories:</strong> What song always makes you think of us or puts you in a happy mood?</p>
-        </div>
-
-        <div class="question-card">
-          <div class="floating-heart" style="top: 15px; right: 15px; animation-delay: 2.4s;">💕</div>
-          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Adventure Bucket:</strong> What's a silly or fun adventure you've always wanted to try with someone special?</p>
-        </div>
-
-        <div class="question-card">
-          <div class="floating-heart" style="bottom: 10px; left: 25px; animation-delay: 2.7s;">💖</div>
-          <p class="text-gray-700"><i class="fas fa-heart text-[#FF7F50] mr-2"></i><strong>Little Joys:</strong> What's a tiny thing that happened recently that made you smile?</p>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -332,36 +163,27 @@
       // ——— Tab logic ———
       const complimentsBtn  = document.getElementById('tab-compliments-btn');
       const popsBtn         = document.getElementById('tab-pops-btn');
-      const convosBtn       = document.getElementById('tab-convos-btn');
       const tabCompliments  = document.getElementById('tab-compliments');
       const tabPops         = document.getElementById('tab-pops');
-      const tabConvos       = document.getElementById('tab-convos');
 
       function showTab(tab) {
-        // Remove active from all buttons and tabs
         complimentsBtn.classList.remove('active');
         popsBtn.classList.remove('active');
-        convosBtn.classList.remove('active');
         tabCompliments.classList.remove('active');
         tabPops.classList.remove('active');
-        tabConvos.classList.remove('active');
 
-        // Add active to selected tab
         if (tab === 'compliments') {
           complimentsBtn.classList.add('active');
           tabCompliments.classList.add('active');
-        } else if (tab === 'pops') {
+        } else {
           popsBtn.classList.add('active');
           tabPops.classList.add('active');
-        } else if (tab === 'convos') {
-          convosBtn.classList.add('active');
-          tabConvos.classList.add('active');
         }
       }
 
       complimentsBtn.addEventListener('click', () => showTab('compliments'));
       popsBtn.addEventListener('click', () => showTab('pops'));
-      convosBtn.addEventListener('click', () => showTab('convos'));
+
 
       // ——— Compliment generator logic ———
       const complimentText      = document.getElementById('compliment-text');
@@ -369,7 +191,7 @@
       const getComplimentBtn    = document.getElementById('get-compliment');
       const complimentContainer = document.getElementById('compliment-container');
       const popWordContainer    = document.getElementById('pop-word-container');
-      const mainBox             = complimentContainer?.closest('.bg-white');
+      const mainBox             = complimentContainer.closest('.bg-white');
 
       const COMPLIMENTS_URL = 'https://raw.githubusercontent.com/BenGoodair/compliments/main/compliments.txt';
       const popWords = ["MWAH","KHOM","GRAB","Squeeeeze","rubbiees","POUNCE","cuddles","chomp","eat me","nuzzzleess","mümmeln","kisssiieeeeees","smooochieeess","my puddddinggg","mwwwwah","mwah mwah mwah"];
@@ -377,8 +199,8 @@
       let compliments = [], currentIndex = -1;
 
       function setLoading(isLoading) {
-        if (complimentText) complimentText.style.display = isLoading ? 'none' : 'block';
-        if (loadingElement) loadingElement.style.display = isLoading ? 'block' : 'none';
+        complimentText.style.display = isLoading ? 'none' : 'block';
+        loadingElement.style.display = isLoading ? 'block' : 'none';
       }
 
       async function fetchCompliments() {
@@ -389,7 +211,7 @@
           compliments = text.split('\n').filter(c=>c.trim()).map(c=>c.trim());
           displayRandomCompliment();
         } catch {
-          if (complimentText) complimentText.textContent = 'Ohhhhh, want to compliment you but I can't right now';
+          complimentText.textContent = 'Ohhhhh, want to compliment you but I can’t right now';
           setLoading(false);
         }
       }
@@ -404,7 +226,6 @@
       }
 
       function createPopWord() {
-        if (!mainBox || !popWordContainer) return;
         const word = popWords[Math.floor(Math.random()*popWords.length)];
         const el   = document.createElement('div');
         el.textContent = word;
@@ -423,43 +244,35 @@
         el.style.top        = `${top}px`;
         el.style.transform  = `rotate(${ -30 + Math.random()*60 }deg)`;
         popWordContainer.appendChild(el);
-        setTimeout(() => {
-          if (popWordContainer.contains(el)) popWordContainer.removeChild(el);
-        }, 1800);
+        setTimeout(() => popWordContainer.removeChild(el), 1800);
       }
 
       function displayRandomCompliment() {
         if (!compliments.length) {
-          if (complimentText) complimentText.textContent = 'No compliments!';
+          complimentText.textContent = 'No compliments!';
           setLoading(false);
           return;
         }
         setLoading(true);
         setTimeout(() => {
-          if (complimentText) complimentText.textContent = getRandomCompliment();
+          complimentText.textContent = getRandomCompliment();
           setLoading(false);
-          if (complimentContainer) {
-            complimentContainer.classList.add('opacity-transition');
-            setTimeout(() => complimentContainer.classList.remove('opacity-transition'), 300);
-          }
+          complimentContainer.classList.add('opacity-transition');
+          setTimeout(() => complimentContainer.classList.remove('opacity-transition'), 300);
           const count = 3 + Math.floor(Math.random()*4);
           for (let i=0; i<count; i++) setTimeout(createPopWord, i*200);
         }, 400);
       }
 
-      if (getComplimentBtn) {
-        getComplimentBtn.addEventListener('mouseenter', () => {
-          const icon = getComplimentBtn.querySelector('i');
-          if (icon) icon.style.animation = 'heartbeat 1s infinite';
-        });
-        getComplimentBtn.addEventListener('mouseleave', () => {
-          const icon = getComplimentBtn.querySelector('i');
-          if (icon) icon.style.animation = '';
-        });
-        getComplimentBtn.addEventListener('click', () => {
-          if (compliments.length) displayRandomCompliment();
-        });
-      }
+      getComplimentBtn.addEventListener('mouseenter', () => {
+        getComplimentBtn.querySelector('i').style.animation = 'heartbeat 1s infinite';
+      });
+      getComplimentBtn.addEventListener('mouseleave', () => {
+        getComplimentBtn.querySelector('i').style.animation = '';
+      });
+      getComplimentBtn.addEventListener('click', () => {
+        if (compliments.length) displayRandomCompliment();
+      });
 
       // kick it all off
       fetchCompliments();
