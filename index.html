@@ -541,23 +541,23 @@
       }
 
       function showManualInstructions(question) {
-        const githubUrl = `https://github.com/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/issues/new?title=${encodeURIComponent('💕 New Cuddly Convo Suggestion')}&body=${encodeURIComponent(`**Question:** ${question}\n\n_Submitted via the Pudding Compliments website_ 🍮💕`)}`;
+        const githubUrl = `https://github.com/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/issues/new?title=${encodeURIComponent('💕 New Cuddly Convo Suggestion')}&body=${encodeURIComponent(`**Question:** ${question}\n\n_Submitted by the perfect puddingpie 🍮💕`)}`;
         
-        showStatus(`✨ Question saved! Click the link below to create the GitHub issue:`, 'success');
+        showStatus(`✨ Mwah mwah mwah! Click the link below to send it to potatoooo:`, 'success');
         
         setTimeout(() => {
           statusMessage.innerHTML = `
             <div class="status-message status-success">
-              <p class="mb-3">✨ Ready to send your question to GitHub!</p>
+              <p class="mb-3">✨ Ready to send your question to the Potatokopf!</p>
               <p class="mb-3"><strong>Your question:</strong> "${question}"</p>
               <a href="${githubUrl}" target="_blank" class="inline-block bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 transition">
-                <i class="fab fa-github mr-2"></i>Create GitHub Issue
+                <i class="fab fa-github mr-2"></i>Send it to the potatopop
               </a>
               <p class="text-xs mt-2 opacity-75">This will open GitHub in a new tab with your question pre-filled!</p>
             </div>
           `;
           statusMessage.classList.remove('hidden');
-        }, 500);
+        }, 5000);
       }
 
       async function createGitHubIssue(question) {
